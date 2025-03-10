@@ -32,7 +32,7 @@ const table = useVueTable({
 <template>
   <TooltipProvider>
     <Table>
-      <TableHeader class="sticky top-0 bg-white z-10 shadow">
+      <TableHeader >
         <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
           <TableHead v-for="header in headerGroup.headers" :key="header.id">
             <FlexRender
@@ -42,7 +42,7 @@ const table = useVueTable({
           </TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody class="">
+      <TableBody>
         <template v-if="table.getRowModel().rows?.length">
           <TableRow
               v-for="row in table.getRowModel().rows" :key="row.id"

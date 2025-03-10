@@ -3,6 +3,7 @@ import {onMounted, ref} from "vue";
 import DataTable from "@/components/Table/DataTable.vue";
 import useStore from "@/store/index.js";
 import {columns} from "@/const/columns.js";
+import {ScrollArea} from "@/components/ui/scroll-area/index.js";
 
 const store = useStore();
 
@@ -29,7 +30,7 @@ onMounted(() => {
       <div
           ref="scrollContainer"
           @scroll="handleScroll"
-          class="w-[400px] sm:w-[500px] md:w-[600px] h-[400px] sm:h-[500px] md:h-[600px] overflow-y-auto overflow-x-hidden shadow-md border rounded-md mx-auto"
+          class=" custom-scrollbar w-[400px] sm:w-[500px] md:w-[600px] h-[400px] sm:h-[500px] md:h-[600px] overflow-y-auto overflow-x-hidden shadow-md border rounded-md mx-auto"
       >
         <DataTable :columns="columns" :data="store.displayedAlbumsList"/>
       </div>
