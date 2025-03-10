@@ -3,7 +3,6 @@ import {onMounted, ref} from "vue";
 import DataTable from "@/components/Table/DataTable.vue";
 import useStore from "@/store/index.js";
 import {columns} from "@/const/columns.js";
-import {ScrollArea} from "@/components/ui/scroll-area/index.js";
 
 const store = useStore();
 

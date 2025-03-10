@@ -12,13 +12,8 @@ const store = useStore();
 
 const isValid = ref(true);
 
-function validateNumber() {
-  const regex = /^[0-9]*$/; // Регулярное выражение для цифр
-  if (!regex.test(store.albumIds)) {
-    isValid.value = false; // Если введены не цифры, показываем ошибку
-  } else {
-    isValid.value = true; // Если введены только цифры, ошибка скрыта
-  }
+const validateNumber = ()=> {
+  isValid.value = /^[0-9]*$/.test(String(store.albumIds || ""));
 }
 
 const toggleTheme = () => {
