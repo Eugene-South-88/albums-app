@@ -9,7 +9,7 @@ export const columns = [
       'button',
       {
         class: 'h-7 px-2 cursor-pointer text-center inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground',
-        onClick: () => column.toggleSorting(), // обработчик сортировки
+        onClick: () => column.toggleSorting(),
       },
       [
         'ID',
@@ -24,8 +24,8 @@ export const columns = [
         style: { maxWidth: '50px' }
       }, id);
     },
-    enableSorting: true, // включаем сортировку для этого столбца
-    sortType: (a, b) => a - b, // сортировка по возрастанию для чисел
+    enableSorting: true,
+    sortType: (a, b) => a - b,
   },
   {
     accessorKey: 'albumId',
@@ -33,7 +33,7 @@ export const columns = [
       'button',
       {
         class: 'h-7 px-2 cursor-pointer text-center inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground',
-        onClick: () => column.toggleSorting(), // обработчик сортировки
+        onClick: () => column.toggleSorting(),
       },
       [
         'Альбом',
@@ -49,9 +49,8 @@ export const columns = [
         title: albumId,
       }, albumId);
     },
-    enableSorting: true, // включаем сортировку для этого столбца
+    enableSorting: true,
     sortType: (a, b) => {
-      // Преобразуем значения в числа для корректной сортировки
       return a - b;
     },
   },
@@ -62,7 +61,7 @@ export const columns = [
       'button',
       {
         class: 'h-7 px-2 cursor-pointer text-center inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground',
-        onClick: () => column.toggleSorting(), // обработчик сортировки
+        onClick: () => column.toggleSorting(),
       },
       [
         'Название',
@@ -77,9 +76,9 @@ export const columns = [
         style: { maxWidth: '100px' },
       }, title);
     },
-    enableSorting: true, // включаем сортировку для этого столбца
+    enableSorting: true,
     sortType: (a, b) => {
-      // Сортируем строки в алфавитном порядке (по умолчанию в лексикографическом порядке)
+
       return a.localeCompare(b);
     },
   },

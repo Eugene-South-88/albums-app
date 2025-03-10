@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getAlbums } from "@/api/albums.js"; // Импортируем API-запрос
+import { getAlbums } from "@/api/albums.js";
 
 const useStore = defineStore("store", {
   state: () => ({
@@ -13,12 +13,11 @@ const useStore = defineStore("store", {
     loading: false,
   }),
   actions: {
-    fetchPhotos() {
+    fetchAlbums() {
       if (this.albumIds.trim() === "") {
         this.albumIds = "";
       }
 
-      // Если ID изменились, сбрасываем данные перед загрузкой новых
       if (this.albumIds !== this.previousAlbumIds) {
         this.previousAlbumIds = this.albumIds;
         this.page = 1;
@@ -50,13 +49,13 @@ const useStore = defineStore("store", {
 
     loadMorePhotos() {
       this.page++;
-      this.fetchPhotos();
+      this.fetchAlbums();
     },
 
     setAlbumIds(newAlbumIds) {
       this.albumIds = newAlbumIds;
-      localStorage.setItem("albumIds", newAlbumIds); // Сохраняем в localStorage
-      this.fetchPhotos(); // Загружаем новые данные
+      localStorage.setItem("albumIds", newAlbumIds);
+      this.fetchAlbums();
     },
   },
 });

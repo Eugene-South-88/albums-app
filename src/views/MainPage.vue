@@ -19,13 +19,13 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
-  store.fetchPhotos()
+  store.fetchAlbums()
 })
 </script>
 
 <template>
   <div class="container mx-auto">
-    <div class="flex justify-center items-center h-[100vh] md:h-[100vh]">
+    <div class="flex justify-center items-center pt-10 h-[100vh] md:h-[100vh]">
       <div
           ref="scrollContainer"
           @scroll="handleScroll"

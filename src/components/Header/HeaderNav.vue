@@ -12,18 +12,21 @@ const store = useStore();
 
 const isValid = ref(true);
 
-const validateNumber = ()=> {
-  isValid.value = /^[0-9]*$/.test(String(store.albumIds || ""));
+const validateNumber = () => {
+  isValid.value = /^[0-9\s]*$/.test(String(store.albumIds || ""));
 }
+
 
 const toggleTheme = () => {
   setTheme(theme.value === "light" ? "dark" : "light");
 };
+
+
 </script>
 
 <template>
   <header class="fixed top-0 w-full p-4 bg-background shadow-md border-b z-10">
-    <form @submit.prevent="store.fetchPhotos"
+    <form @submit.prevent="store.fetchAlbums"
          class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6"
     >
       <Switch @update:model-value="toggleTheme" class="sm:mr-4">
@@ -33,13 +36,13 @@ const toggleTheme = () => {
         </template>
       </Switch>
 
-      <div class="h-10" >
+      <div class="h-10">
         <div class="relative w-full max-w-sm items-center">
           <Input
               @input.prevent="validateNumber"
               v-model="store.albumIds"
               placeholder="Введите ID альбомов..."
-              class="pl-10 w-full sm:w-96  rounded-lg focus:bg-input border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
+              class="pl-10  sm:w-96  rounded-lg focus:bg-input border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
           />
           <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
         <Icon icon="hugeicons:search-01" />
@@ -48,12 +51,14 @@ const toggleTheme = () => {
         <p v-if="!isValid" class="text-xs text-red-500">Попробуйте цифры.</p>
       </div>
 
-      <Button
-          class="w-full sm:w-auto py-2 bg-primary px-4 rounded-lg border-primary text-primary-foreground font-semibold shadow-md  hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 active:scale-95"
-          :disabled="store.loading"
-      >
-        Поиск
-      </Button>
+
+        <Button
+            class="w-full  sm:w-auto py-2 bg-primary px-4 rounded-lg border-primary text-primary-foreground font-semibold shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 active:scale-95 flex items-center justify-center gap-2"
+            :disabled="store.loading"
+        >
+          <Icon v-if="store.loading" icon="line-md:loading-twotone-loop" />
+          <span v-else>Поиск</span>
+        </Button>
     </form>
   </header>
 </template>
