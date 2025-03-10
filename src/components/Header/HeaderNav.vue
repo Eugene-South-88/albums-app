@@ -5,6 +5,7 @@ import useStore from "@/store/index.js";
 import { Switch } from '@/components/ui/switch'
 import { useTheme } from "@/composables/useTheme";
 import { Icon } from "@iconify/vue";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip/index.js";
 
 const { theme, setTheme } = useTheme();
 const store = useStore();
@@ -15,10 +16,10 @@ const toggleTheme = () => {
 </script>
 
 <template>
-  <header class="fixed  top-0 w-full p-4 bg-background shadow-md border-b z-10">
+  <header class="fixed top-0 w-full p-4 bg-background shadow-md border-b z-10">
     <form @input.prevent="store.fetchPhotos"
-         class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-
+         class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6"
+    >
       <Switch @update:model-value="toggleTheme" class="sm:mr-4">
         <template #thumb>
           <Icon v-if="theme === 'dark'" icon="noto:full-moon" class="size-4"/>
@@ -26,11 +27,18 @@ const toggleTheme = () => {
         </template>
       </Switch>
 
-      <Input
-          v-model="store.albumIds"
-          placeholder="Введите ID альбомов..."
-          class="w-full sm:w-96 p-3 rounded-lg focus:bg-input border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
-      />
+      <div class="relative w-full max-w-sm items-center">
+        <Input
+
+            v-model="store.albumIds"
+            placeholder="Введите ID альбомов..."
+            class="pl-10 w-full sm:w-96  rounded-lg focus:bg-input border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
+        />
+        <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+        <Icon icon="hugeicons:search-01" />
+    </span>
+        <p></p>
+      </div>
 
       <Button
           class="w-full sm:w-auto py-2 bg-primary px-4 rounded-lg border-primary text-primary-foreground font-semibold shadow-md  hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 active:scale-95"
@@ -40,5 +48,4 @@ const toggleTheme = () => {
       </Button>
     </form>
   </header>
-  <div class="mb-10"></div>
 </template>

@@ -6,7 +6,7 @@ const useStore = defineStore("store", {
     albumIds: localStorage.getItem("albumIds") || "",
     previousAlbumIds: "",
     albumsList: [],
-    displayedAlbumsList: false,
+    displayedAlbumsList: [],
     page: 1,
     perPage: 20,
     limit: 30,
