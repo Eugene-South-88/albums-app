@@ -1,42 +1,64 @@
-import {defineStore} from "pinia";
-import axios from "axios";
+import { defineStore } from "pinia";
+import { getAlbums } from "@/api/albums.js"; // Импортируем API-запрос
 
-const useStore = defineStore('store',{
-  state: ()=>({
-    albumIds: '',
+const useStore = defineStore("store", {
+  state: () => ({
+    albumIds: localStorage.getItem("albumIds") || "",
+    previousAlbumIds: "",
     albumsList: [],
-    limit: 30,
+    displayedAlbumsList: false,
     page: 1,
+    perPage: 20,
+    limit: 30,
     loading: false,
-    hasMore: true // Есть ли еще фото для загрузки
   }),
   actions: {
-    async fetchPhotos() {
-      this.albumsList = [];
-      this.displayedPhotos = [];
-      this.limit = 30;
-      let url = 'https://jsonplaceholder.typicode.com/photos';
-
-      if (this.albumIds.trim()) {
-        const ids = this.albumIds.trim().split(' ').map(id => `albumId=${id}`).join('&');
-        url += `?${ids}`;
+    fetchPhotos() {
+      if (this.albumIds.trim() === "") {
+        this.albumIds = "";
       }
 
-      try {
-        const response = await axios.get(url);
-        this.albumsList = response.data;
-        this.displayedPhotos = this.albumsList.slice(0, this.limit);
-      } catch (error) {
-        console.error('Ошибка при загрузке данных:', error);
+      // Если ID изменились, сбрасываем данные перед загрузкой новых
+      if (this.albumIds !== this.previousAlbumIds) {
+        this.previousAlbumIds = this.albumIds;
+        this.page = 1;
+        this.albumsList = [];
+        this.displayedAlbumsList = [];
+        localStorage.setItem("albumIds", this.albumIds);
       }
+
+      this.loading = true;
+
+      getAlbums(this.albumIds, this.page, this.limit)
+        .then((response) => {
+          const data = response.data;
+          if (this.page === 1) {
+            this.albumsList = data;
+            this.displayedAlbumsList = this.albumsList.slice(0, this.perPage);
+          } else {
+            this.albumsList.push(...data);
+            this.displayedAlbumsList = this.albumsList.slice(0, this.page * this.perPage);
+          }
+        })
+        .catch((error) => {
+          console.error("Ошибка при загрузке данных:", error);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
-    loadMore() {
-      if (this.displayedPhotos.length < this.albumsList.length) {
-        this.limit += 20;
-        this.displayedPhotos = this.albumsList.slice(0, this.limit);
-      }
-    }
-  },
-})
 
-export default useStore
+    loadMorePhotos() {
+      this.page++;
+      this.fetchPhotos();
+    },
+
+    setAlbumIds(newAlbumIds) {
+      this.albumIds = newAlbumIds;
+      localStorage.setItem("albumIds", newAlbumIds); // Сохраняем в localStorage
+      this.fetchPhotos(); // Загружаем новые данные
+    },
+  },
+});
+
+export default useStore;

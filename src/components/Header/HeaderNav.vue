@@ -15,9 +15,8 @@ const toggleTheme = () => {
 </script>
 
 <template>
-  <header class="fixed top-0 w-full p-4 bg-background shadow-md z-10">
-    <p>{{store.albumsIds}}</p>
-    <form @submit.prevent="store.fetchPhotos"
+  <header class="fixed  top-0 w-full p-4 bg-background shadow-md border-b z-10">
+    <form @input.prevent="store.fetchPhotos"
          class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
 
       <Switch @update:model-value="toggleTheme" class="sm:mr-4">
@@ -37,7 +36,7 @@ const toggleTheme = () => {
           class="w-full sm:w-auto py-2 bg-primary px-4 rounded-lg border-primary text-primary-foreground font-semibold shadow-md  hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 active:scale-95"
           :disabled="store.loading"
       >
-        Отправить
+        Поиск
       </Button>
     </form>
   </header>

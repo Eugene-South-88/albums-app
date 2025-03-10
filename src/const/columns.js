@@ -30,8 +30,8 @@ export const columns = [
       const albumId = row.getValue('albumId');
 
       return h('p', {
-        class: 'text-left ml-3 font-medium truncate overflow-hidden whitespace-nowrap text-ellipsis',
-        style: {maxWidth: '50px'},
+        class: 'text-left ml-5 font-medium truncate overflow-hidden whitespace-nowrap text-ellipsis',
+        style: {maxWidth: '30px'},
         title: albumId,
       }, albumId);
     },
@@ -45,7 +45,7 @@ export const columns = [
 
       return h('p', {
         class: 'text-left font-medium truncate w-[50px] sm:w-[100px] md:w-[130px] overflow-hidden whitespace-nowrap text-ellipsis',
-        style: {maxWidth: '110px'},
+        style: {maxWidth: '100px'},
         title: title,
       }, title);
     },
@@ -59,7 +59,7 @@ export const columns = [
 
       return h('p', {
         class: 'text-left font-medium truncate w-[50px] sm:w-[100px] md:w-[130px]  overflow-hidden whitespace-nowrap text-ellipsis',
-        style: {maxWidth: '130px'},
+        style: {maxWidth: '120px'},
         title: url,
       }, url);
     },
@@ -73,7 +73,7 @@ export const columns = [
 
       return h('p', {
         class: 'text-left font-medium truncate w-[50px] sm:w-[100px] md:w-[130px] overflow-hidden whitespace-nowrap text-ellipsis',
-        style: {maxWidth: '130px'},
+        style: {maxWidth: '120px'},
         title: thumbnailUrl,
       }, thumbnailUrl);
     },

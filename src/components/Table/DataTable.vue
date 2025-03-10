@@ -13,6 +13,7 @@ import {
   getCoreRowModel,
   useVueTable,
 } from '@tanstack/vue-table';
+import {ref} from "vue";
 
 const props = defineProps({
   columns: Array,
@@ -38,7 +39,7 @@ const table = useVueTable({
         </TableHead>
       </TableRow>
     </TableHeader>
-    <TableBody>
+    <TableBody >
       <template v-if="table.getRowModel().rows?.length">
         <TableRow
             v-for="row in table.getRowModel().rows" :key="row.id"
