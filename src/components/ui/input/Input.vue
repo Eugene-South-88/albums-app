@@ -19,9 +19,9 @@ const modelValue = useVModel(props, 'modelValue', emits, {
 });
 
 
-onMounted(()=>{
-  inputFocus.value.focus()
-})
+// onMounted(()=>{
+//   inputFocus.value.focus()
+// })
 </script>
 
 <template>

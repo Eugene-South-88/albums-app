@@ -1,61 +1,61 @@
 import { defineStore } from "pinia";
-import { getAlbums } from "@/api/albums.js";
+import {fetchStatusList, getReports} from "@/api/reports.js";
+import {reportTableMap} from "@/api/mappers/reportTableMap.js";
+import {fetchUsers} from "@/api/users.js";
 
 const useStore = defineStore("store", {
   state: () => ({
-    albumIds: localStorage.getItem("albumIds") || "",
-    previousAlbumIds: "",
-    albumsList: [],
-    displayedAlbumsList: [],
-    page: 1,
-    perPage: 20,
-    limit: 30,
-    loading: false,
+    payload: {
+      firstId: 2,
+      lastId: 23560,
+    },
+    dealsList: [],
+    dealStatusList: [],
+    usersList: [],
+    loading: true,
   }),
   actions: {
-    fetchAlbums() {
-      if (this.albumIds.trim() === "") {
-        this.albumIds = "";
-      }
-
-      if (this.albumIds !== this.previousAlbumIds) {
-        this.previousAlbumIds = this.albumIds;
-        this.page = 1;
-        this.albumsList = [];
-        this.displayedAlbumsList = [];
-        localStorage.setItem("albumIds", this.albumIds);
-      }
-
+    getDealsList() {
       this.loading = true;
-
-      getAlbums(this.albumIds, this.page, this.limit)
-        .then((response) => {
-          const data = response.data;
-          if (this.page === 1) {
-            this.albumsList = data;
-            this.displayedAlbumsList = this.albumsList.slice(0, this.perPage);
-          } else {
-            this.albumsList.push(...data);
-            this.displayedAlbumsList = this.albumsList.slice(0, this.page * this.perPage);
-          }
+      getReports(this.payload)
+        .then((res) => {
+          this.dealsList = reportTableMap(res.data.result);
         })
-        .catch((error) => {
-          console.error("Ошибка при загрузке данных:", error);
+        .catch((err) => {
+          console.error("Ошибка загрузки сделок:", err);
         })
         .finally(() => {
           this.loading = false;
         });
     },
 
-    loadMorePhotos() {
-      this.page++;
-      this.fetchAlbums();
+    getDealsStatus() {
+      this.loading = true;
+      fetchStatusList()
+        .then((res) => {
+          this.dealStatusList = res;
+        })
+        .catch((err) => {
+          console.error("Ошибка загрузки статусов:", err);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
 
-    setAlbumIds(newAlbumIds) {
-      this.albumIds = newAlbumIds;
-      localStorage.setItem("albumIds", newAlbumIds);
-      this.fetchAlbums();
+    getUsers() {
+      this.loading = true;
+      fetchUsers()
+        .then((res) => {
+          this.usersList = Array.isArray(res) ? res : res.data.items || [];
+          console.log("users", this.usersList);
+        })
+        .catch((err) => {
+          console.error("Ошибка загрузки пользователей:", err);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
 });

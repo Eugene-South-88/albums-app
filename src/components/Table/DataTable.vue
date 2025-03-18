@@ -66,7 +66,7 @@ const table = useVueTable({
           <TableRow
               v-for="(item, index) in 15" :key="index"
           >
-            <TableCell v-for="(element, index) in 5" :key="index">
+            <TableCell v-for="(element, index) in 14" :key="index">
               <Skeleton class="w-20 h-5"/>
             </TableCell>
           </TableRow>
