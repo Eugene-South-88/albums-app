@@ -7,6 +7,8 @@ export const reportTableMap = (table) => {
       DATE_CREATE: formatDateYMD(element.DATE_CREATE),
       CLOSEDATE: formatDateYMD(element.CLOSEDATE),
       STAGE_SEMANTIC_ID: stageSemanticMap[element.STAGE_SEMANTIC_ID],
+      ASSIGNED_BY_ID: 'Иван Иванов',
+      CREATED_BY_ID: 'Борис Моисеев'
     }
   })
 }
@@ -16,3 +18,4 @@ const stageSemanticMap = {
   S: 'успешная',
   F: 'неуспешная',
 }
+
