@@ -5,7 +5,14 @@ export const reportTableMap = (table) => {
     return {
       ...element,
       DATE_CREATE: formatDateYMD(element.DATE_CREATE),
-      CLOSEDATE: formatDateYMD(element.CLOSEDATE)
+      CLOSEDATE: formatDateYMD(element.CLOSEDATE),
+      STAGE_SEMANTIC_ID: stageSemanticMap[element.STAGE_SEMANTIC_ID],
     }
   })
+}
+
+const stageSemanticMap = {
+  P: 'в работе',
+  S: 'успешная',
+  F: 'неуспешная',
 }

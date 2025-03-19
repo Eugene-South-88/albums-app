@@ -31,11 +31,14 @@ export function generateTableColumns(filteredFields) {
       }
 
 
+
+
+
       return h(
         'p',
         {
           class:
-            'text-center font-medium truncate overflow-hidden whitespace-nowrap text-ellipsis',
+            'text-center cursor-default font-medium truncate overflow-hidden whitespace-nowrap text-ellipsis',
           style: { maxWidth: '100px' },
         },
         value
