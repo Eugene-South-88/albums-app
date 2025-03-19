@@ -16,6 +16,12 @@ import {
 } from '@tanstack/vue-table';
 import { Skeleton } from "@/components/ui/skeleton/index.js";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import {storeToRefs} from "pinia";
+import useStore from "@/store/index.js";
+
+const store = useStore();
+
+const {loading} = storeToRefs(store)
 
 const props = defineProps({
   columns: Array,
@@ -44,7 +50,7 @@ const table = useVueTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        <template v-if="table.getRowModel().rows?.length">
+        <template v-if="!loading">
           <TableRow
               v-for="row in table.getRowModel().rows" :key="row.id"
               :data-state="row.getIsSelected() ? 'selected' : undefined"

@@ -1,0 +1,16 @@
+export const filterKeys = [
+  'ID',
+  'TITLE',
+  'STAGE_SEMANTIC_ID',
+  'STAGE_ID',
+  'ASSIGNED_BY_ID',
+  'DATE_CREATE',
+  'CREATED_BY_ID',
+  'CATEGORY_ID',
+  'CURRENCY_ID',
+  'OPPORTUNITY',
+  'CLOSEDATE',
+  'SOURCE_ID',
+  'UTM_SOURCE',
+  'LEAD_ID',
+];

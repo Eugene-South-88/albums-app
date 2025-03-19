@@ -16,21 +16,16 @@ const useStore = defineStore("store", {
   }),
   actions: {
     getDealsList() {
-      this.loading = true;
       getReports(this.payload)
         .then((res) => {
-          this.dealsList = reportTableMap(res.data.result);
+          this.dealsList = reportTableMap(res.data.result, this.usersList);
         })
         .catch((err) => {
           console.error("Ошибка загрузки сделок:", err);
         })
-        .finally(() => {
-          this.loading = false;
-        });
     },
 
     getDealsStatus() {
-      this.loading = true;
       fetchStatusList()
         .then((res) => {
           this.dealStatusList = res;
@@ -38,24 +33,16 @@ const useStore = defineStore("store", {
         .catch((err) => {
           console.error("Ошибка загрузки статусов:", err);
         })
-        .finally(() => {
-          this.loading = false;
-        });
     },
 
     getUsers() {
-      this.loading = true;
       fetchUsers()
         .then((res) => {
-          this.usersList = Array.isArray(res) ? res : res.data.items || [];
-          console.log("users", this.usersList);
+          this.usersList = res.data?.result || []
         })
         .catch((err) => {
           console.error("Ошибка загрузки пользователей:", err);
         })
-        .finally(() => {
-          this.loading = false;
-        });
     },
   },
 });

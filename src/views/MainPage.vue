@@ -4,47 +4,42 @@ import DataTable from "@/components/Table/DataTable.vue";
 import useStore from "@/store/index.js";
 import {filterDataByKeys} from "@/api/mappers/columns.js";
 import {fetchDealFields} from "@/api/reports.js";
-import { generateTableColumns } from "@/const/columns.js";
+import {generateTableColumns} from "@/const/columns.js";
+import {filterKeys} from "@/utils/const/dealFieldsFilter.js";
+import {storeToRefs} from "pinia";
 
 const store = useStore();
+
+const {loading} = storeToRefs(store)
 
 
 const fields = ref([]);
 const filteredFields = ref([]);
 
-const filterKeys = [
-  'ID',
-  'TITLE',
-  'STAGE_SEMANTIC_ID',
-  'STAGE_ID',
-  'ASSIGNED_BY_ID',
-  'DATE_CREATE',
-  'CREATED_BY_ID',
-  'CATEGORY_ID',
-  'CURRENCY_ID',
-  'OPPORTUNITY',
-  'CLOSEDATE',
-  'SOURCE_ID',
-  'UTM_SOURCE',
-  'LEAD_ID',
-];
-//вынести в константу
-
-
 const tableColumns = computed(() => generateTableColumns(filteredFields.value));
 
-onMounted(async() => {
-  await store.getDealsList()
-  fields.value = await fetchDealFields();
-  filteredFields.value = await filterDataByKeys(fields.value, filterKeys)
+onMounted(async () => {
+  loading.value = true
+  await fetchDealFields().then((res) => {
+    fields.value = res
+  })
 
-  store.getDealsStatus()
-  store.getUsers()
+  const promises = [
+    filterDataByKeys(fields.value, filterKeys),
+    await store.getUsers(),
+    store.getDealsStatus(),
+    store.getDealsList(),
+  ]
+
+  Promise.allSettled(promises).then(([filteredDataRes]) =>{
+    filteredFields.value = filteredDataRes.value
+  })
+
+  loading.value = false
 })
 </script>
 
 <template>
-
   <div class=" mx-auto">
     <div class="flex px-5 justify-center items-center pt-10 h-[100vh] md:h-[100vh]">
       <div
