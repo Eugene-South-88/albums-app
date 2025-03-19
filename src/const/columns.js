@@ -25,14 +25,9 @@ export function generateTableColumns(filteredFields) {
     cell: ({ row }) => {
       const value = row.getValue(field.key);
 
-
       if (value === null || value === undefined || value === '') {
         return h('span');
       }
-
-
-
-
 
       return h(
         'p',
