@@ -6,13 +6,16 @@ export const reportTableMap = (table, users) => {
     const authorUser = users.find((user) => user.ID === element.CREATED_BY_ID) || '';
 
 
+
+
     return {
       ...element,
       DATE_CREATE: formatDateYMD(element.DATE_CREATE),
       CLOSEDATE: formatDateYMD(element.CLOSEDATE),
       STAGE_SEMANTIC_ID: stageSemanticMap[element.STAGE_SEMANTIC_ID],
       ASSIGNED_BY_ID: `${assigneeUser?.LAST_NAME} ${assigneeUser?.NAME}`,
-      CREATED_BY_ID: `${assigneeUser?.LAST_NAME} ${assigneeUser?.NAME}`
+      CREATED_BY_ID: `${authorUser?.LAST_NAME} ${authorUser?.NAME}`,
+      STAGE_ID: '123'
     }
   })
 }
