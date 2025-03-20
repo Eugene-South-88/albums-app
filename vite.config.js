@@ -5,7 +5,7 @@ import tailwind from 'tailwindcss'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/babmbit-test-task/',
+  base: '/bambit-test-task/',
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()],
