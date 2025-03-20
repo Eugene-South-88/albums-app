@@ -10,7 +10,7 @@ import {storeToRefs} from "pinia";
 
 const store = useStore();
 
-const {loading} = storeToRefs(store)
+const {loading, dealStatusList} = storeToRefs(store)
 
 
 const fields = ref([]);
@@ -34,7 +34,7 @@ onMounted(async () => {
   Promise.allSettled(promises).then(([filteredDataRes]) =>{
     filteredFields.value = filteredDataRes.value
   })
-
+  console.log(dealStatusList.value)
   loading.value = false
 })
 </script>
@@ -43,7 +43,7 @@ onMounted(async () => {
   <div class=" mx-auto">
     <div class="flex px-5 justify-center items-center pt-10 h-[100vh] md:h-[100vh]">
       <div
-          class=" custom-scrollbar w-full h-[400px] sm:h-[500px] md:h-[600px] overflow-y-auto  shadow-md border rounded-md mx-auto"
+          class=" custom-scrollbar  h-[400px] sm:h-[500px] md:h-[600px] overflow-y-auto  shadow-md border rounded-md mx-auto"
       >
         <DataTable :columns="tableColumns" :data="store.dealsList"/>
       </div>

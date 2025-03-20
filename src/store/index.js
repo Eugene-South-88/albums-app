@@ -18,7 +18,7 @@ const useStore = defineStore("store", {
     getDealsList() {
       getReports(this.payload)
         .then((res) => {
-          this.dealsList = reportTableMap(res.data.result, this.usersList);
+          this.dealsList = reportTableMap(res.data.result, this.usersList, this.dealStatusList);
         })
         .catch((err) => {
           console.error("Ошибка загрузки сделок:", err);
@@ -28,7 +28,7 @@ const useStore = defineStore("store", {
     getDealsStatus() {
       fetchStatusList()
         .then((res) => {
-          this.dealStatusList = res;
+          this.dealStatusList = res.data?.result || []
         })
         .catch((err) => {
           console.error("Ошибка загрузки статусов:", err);

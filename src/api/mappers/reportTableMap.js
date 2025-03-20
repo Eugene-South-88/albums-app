@@ -1,12 +1,14 @@
 import {formatDateYMD} from "@/utils/helpers/dateHelper.js";
 
-export const reportTableMap = (table, users) => {
+export const reportTableMap = (table, users, status) => {
+
+  const dealStatuses = status.filter(item => item.ENTITY_ID.startsWith("DEAL_STAGE"));
+
   return table.map((element) => {
     const assigneeUser = users.find((user) => user.ID === element.ASSIGNED_BY_ID) || '';
     const authorUser = users.find((user) => user.ID === element.CREATED_BY_ID) || '';
 
-
-
+    const dealStatus = dealStatuses.find((status) => status.STATUS_ID === element.STAGE_ID) || '';
 
     return {
       ...element,
@@ -15,10 +17,15 @@ export const reportTableMap = (table, users) => {
       STAGE_SEMANTIC_ID: stageSemanticMap[element.STAGE_SEMANTIC_ID],
       ASSIGNED_BY_ID: `${assigneeUser?.LAST_NAME} ${assigneeUser?.NAME}`,
       CREATED_BY_ID: `${authorUser?.LAST_NAME} ${authorUser?.NAME}`,
-      STAGE_ID: '123'
-    }
-  })
-}
+      STAGE_ID: dealStatus?.NAME || ''
+    };
+  });
+};
+
+
+
+
+//полное отображение ответственный
 
 const stageSemanticMap = {
   P: 'в работе',

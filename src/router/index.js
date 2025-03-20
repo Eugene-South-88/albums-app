@@ -11,4 +11,6 @@ const router = createRouter({
   ]
 })
 
+  //убрать роутинг
+
 export default router
