@@ -5,6 +5,7 @@
 @layer utilities {
     .custom-scrollbar::-webkit-scrollbar {
         width: 8px;
+        height: 8px;
     }
 
     .custom-scrollbar::-webkit-scrollbar-track {
@@ -17,9 +18,10 @@
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-
+        background: hsl(var(--primary) / 0.8); /* Немного темнее при наведении */
     }
 }
+
 
 @layer base {
     :root {

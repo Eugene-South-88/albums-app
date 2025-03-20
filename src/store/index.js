@@ -16,6 +16,7 @@ const useStore = defineStore("store", {
   }),
   actions: {
     getDealsList() {
+      console.log()
       getReports(this.payload)
         .then((res) => {
           this.dealsList = reportTableMap(res.data.result, this.usersList, this.dealStatusList);

@@ -1,10 +1,29 @@
 import axios from "axios";
 
 export const getReports = (payload) => {
-  return axios.get(`https://dveri-bambit.bitrix24.ru/rest/80/hzb15sdx7tu5jsph/crm.deal.list.json?filter[>ID]=${payload.firstId}&filter[<ID]=${payload.lastId}&select[0]=ID&select[1]=TITLE&select[2]=STAGE_SEMANTIC_ID&select[3]=STAGE_ID&select[4]=ASSIGNED_BY_ID&select[5]=DATE_CREATE&select[6]=CREATED_BY_ID&select[7]=CATEGORY_ID&select[8]=CURRENCY_ID&select[9]=OPPORTUNITY&select[10]=CLOSEDATE&select[11]=SOURCE_ID&select[12]=UTM_SOURCE&select[13]=LEAD_ID`, {
-    params: {}
-  });
-}
+  const baseUrl = "https://dveri-bambit.bitrix24.ru/rest/80/hzb15sdx7tu5jsph/crm.deal.list.json";
+
+
+  const params = {
+    ...(payload.firstId && { "filter[>ID]": payload.firstId }),
+    ...(payload.lastId && { "filter[<ID]": payload.lastId })
+  };
+
+
+  const selectFields = [
+    "ID", "TITLE", "STAGE_SEMANTIC_ID", "STAGE_ID", "ASSIGNED_BY_ID",
+    "DATE_CREATE", "CREATED_BY_ID", "CATEGORY_ID", "CURRENCY_ID",
+    "OPPORTUNITY", "CLOSEDATE", "SOURCE_ID", "UTM_SOURCE", "LEAD_ID"
+  ];
+
+
+  const selectParams = selectFields.map((field, index) => `select[${index}]=${field}`).join("&");
+
+  const finalUrl = `${baseUrl}?${selectParams}`;
+
+  return axios.get(finalUrl, { params });
+};
+
 
 export const fetchDealFields =()=> {
   return axios.get('https://dveri-bambit.bitrix24.ru/rest/80/3e7e3qrnoi3fo818/crm.deal.fields.json')

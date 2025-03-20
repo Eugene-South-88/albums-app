@@ -16,7 +16,12 @@ const {loading, dealStatusList} = storeToRefs(store)
 const fields = ref([]);
 const filteredFields = ref([]);
 
-const tableColumns = computed(() => generateTableColumns(filteredFields.value));
+const sortingState = ref({
+  column: 'ID',
+  order: 'desc',
+});
+
+const tableColumns = computed(() => generateTableColumns(filteredFields.value,  sortingState.value));
 
 onMounted(async () => {
   loading.value = true
