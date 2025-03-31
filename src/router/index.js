@@ -5,7 +5,7 @@ import MainPage from "@/views/MainPage.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes:[
-    {path: '/bambit-test-task/', component: MainLayout, children:[
+    {path: '/photo-table-app/', component: MainLayout, children:[
         {path: '', component: MainPage}
       ]}
   ]
